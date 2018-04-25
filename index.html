@@ -49,8 +49,9 @@
     #logo {
       display: block;
       position: fixed;
-      margin: -200px -200px 0px;
-      padding: 0 50%;
+      bottom: -200px;
+      left: 50%;
+      margin: 0px 0 0 -200px;
       opacity: 0.3;
       z-index: 1;
     }
@@ -63,6 +64,44 @@
       max-width: 27rem;
       padding: 4rem 2rem;
       margin: 1rem auto;
+    }
+
+    .need b, #change.need {
+      color: rgba(0, 140, 60, 1);
+    }
+
+    .create b, #change.create {
+      color: rgba(200, 0, 51, 1);
+    }
+
+    .button {
+      font-style: italic;
+      text-align: right;
+      transform: translateZ(0);
+    }
+
+    .button button {
+      font-family: 'Alegreya', serif;
+      font-size: 1rem;
+      color: rgba(255, 251, 243, 1);
+      background: rgba(255, 0, 51, 0.9);
+      border: 1px solid rgba(255, 0, 51, 1);
+      border-radius: 2px;
+      box-shadow: 2px 2px 2px rgba(100, 0, 31, 0.7);
+      will-change: transform;
+      transition: 0.3s ease;
+      padding: 0.5rem;
+      margin: 0 0 0.5rem -0.05rem;
+    }
+
+    .button button:hover { 
+      transform: translateY(-2px);
+      box-shadow: 4px 4px 2px rgba(100, 0, 31, 0.7);
+    }
+
+    .button button:active {
+      transform: translateY(1px);
+      box-shadow: 1px 1px 2px rgba(100, 0, 31, 0.7); 
     }
 
     @media screen and (max-width: 700px) {
@@ -213,28 +252,86 @@
       I don't miss <em>that</em> scent and texture though. <em>That’s what paper books are for.</em>
     </p>
 
-    <p>
-      <b>I miss</b> leaving a book open on the kitchen table.
-      <b>I miss</b> borrowing a book with some curious marginalia.
-      <b>I miss</b> sharing my notes on my blog.
-      <b>I miss</b> meaningful organization of my books.
-      <b>I miss</b> my books on many devices I own.
-      <b>I miss</b> scanning their library when visiting a friend.
-      <b>I miss</b> distinctive typography embracing the form.
-      <b>I miss</b> owning my books and doing anything I want with them.
-      <b>I miss</b> an ability to parse and analyze my books with any program.
-      <b>I miss</b> the ideals of early open web.
-      <b>I miss</b> source viewing.
-      <b>I miss</b> the mighty abilities of modern browsers.
-      <b>I miss</b> reading extensions that help with a specific kind of text.
-      <b>I miss</b> books written for the web.
-      <b>I miss</b> the future that did not arrive yet.
+    <p class="missing">
+      <b data-kind="doing">I miss</b> leaving a digital book open on the kitchen table.
+      <b data-kind="doing">I miss</b> borrowing a digital book with some curious marginalia.
+      <b data-kind="doing">I miss</b> sharing my notes on my blog.
+      <b data-kind="thing">I miss</b> meaningful organization of my books.
+      <b data-kind="thing">I miss</b> my books on many devices I own.
+      <b data-kind="doing">I miss</b> scanning their library when visiting a friend.
+      <b data-kind="thing">I miss</b> distinctive typography embracing book’s form.
+      <b data-kind="doing">I miss</b> owning my books and doing anything I want with them.
+      <b data-kind="thing">I miss</b> an ability to parse and analyze my books with any program.
+      <b data-kind="thing">I miss</b> my own curated reading profile that makes me smarter.
+      <b data-kind="thing">I miss</b> the ideals of early open web.
+      <b data-kind="doing">I miss</b> source viewing.
+      <b data-kind="thing">I miss</b> the mighty abilities of modern browsers.
+      <b data-kind="doing">I miss</b> reading extensions that help with a specific kind of text.
+      <b data-kind="thing">I miss</b> books written for the web.
+      <b data-kind="thing">I miss</b> the future that did not arrive yet.
     </p>
 
     <p>
       Paper books are still better in many ways than currently published ebooks.
-      Computer and network are still no challenge for a printing press.
+      Computers and networks are still no challenge for the printing press.
+      <b id="change"> </b>
     </p>
+
+    <p class="button">
+      <button onclick="setPhrase()">bring change!</button><br> click on this button to change the world
+    </p>
+
+    
+
+    <script type="text/javascript">
+      var setPhrase = function() {
+        var cur = 0;
+        var phrases = {
+          thing: [
+            "I miss", 
+            "I need", 
+            "Let's create something that brings",
+          ],
+          doing: [
+            "I miss",
+            "I look forward to",
+            "Let's create something that allows",
+          ]
+        };
+
+        return function() {
+          var change = document.querySelector('#change');
+          var missing = document.querySelector('.missing');
+          var nodes = document.querySelectorAll('.missing b');
+          var join = document.createElement("SPAN");
+          join.innerHTML = 'Explore <a href="https://github.com/next-book/">our exploratory repos</a> or <a href="https://www.jan-martinek.com/contact/">ping Jan with an e-mail</a>.';
+          cur = (cur + 1) % 3;
+          
+          if (cur == 1) change.innerHTML = 'Let’s change that!';
+          else if (cur == 2) {
+            change.innerHTML = 'Let’s change that!';
+            change.parentNode.appendChild(join);
+          }
+
+          if (cur == 0) { 
+            missing.classList.remove('need');
+            missing.classList.remove('create');
+            change.classList.remove('need');
+            change.classList.remove('create');
+          } else if (cur == 1) {
+            missing.classList.add('need');
+            change.classList.add('need');
+          } else if (cur == 2) {
+            missing.classList.add('create');
+            change.classList.add('create');
+          }
+
+          for(let i = 0; i < nodes.length; i++) {
+            nodes[i].innerHTML = phrases[nodes[i].dataset.kind][cur];
+          }
+        }
+      }();
+    </script>
 
     <h1>next-book</h1>
 
