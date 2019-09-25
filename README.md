@@ -1,3 +1,3 @@
-# about
+# redirect
 
-[next-book website](http://next-book.github.io/)
+A redirect from the former github-hosted website to [next-book.info](https://www.next-book.info).
